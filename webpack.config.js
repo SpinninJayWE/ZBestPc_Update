@@ -5,6 +5,7 @@ const CopyPlugin = require("copy-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const htmlWebpackPlugins = [
     new HtmlWebpackPlugin({
         filename: 'index.html',
@@ -52,6 +53,13 @@ module.exports = {
                 generator: {
                     filename: 'images/[name].[hash:6][ext]'
                 }
+            },
+            {
+                test: /\.ejs/,
+                loader: 'ejs-loader',
+                options: {
+                    esModule: false
+                }
             }
         ]
     },
@@ -98,6 +106,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/[name].css',
             chunkFilename: 'css/[name].chunk.css'
-        })
+        }),
+        new CleanWebpackPlugin()
     ]
 }
